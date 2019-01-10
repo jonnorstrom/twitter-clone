@@ -4,15 +4,20 @@
 <p><%= @user.location %></p>
 <p><%= @user.bio %></p>
 
-<p>
-    <% if current_user.following.include?(@user.id) %>
-        <%= link_to "Unfollow", unfollow_path(id: @user.id), class: "btn btn-danger" %>
-    <% else %>
-        <% if current_user.id != @user.id %>
-	    <%= link_to "Follow", now_following_path(id: @user.id), class: "btn btn-primary" %>
-	<% end %>
-    <% end %>
-</p>
+<% if current_user %>
+    <p>
+        <% if current_user.following.include?(@user.id) %>
+                <%= link_to "Unfollow", unfollow_path(id: @user.id), class: "btn btn-danger" %>
+        <% else %>
+                <% if current_user.id != @user.id %>
+                <%= link_to "Follow", now_following_path(id: @user.id), class: "btn btn-primary" %>
+            <% end %>
+        <% end %>
+    </p>
+
+<% else %>
+    <p>Login or sign up to follow this account</p>
+<% end %>
 
 <% @user.tweets.each do |tweet| %>
     <div>
